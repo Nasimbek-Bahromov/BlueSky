@@ -9,7 +9,13 @@ class Baner(models.Model):
     
     def __str__(self):
         return self.title
-
+    
+class Advertising(models.Model):
+    title = models.CharField(max_length = 255)
+    detail = models.TextField()
+    image = models.ImageField(upload_to="media/", verbose_name="Image")
+    image = models.ImageField(default='default_image.png')
+    price = models.DecimalField(decimal_places = 2, max_digits = 10000000)
 
 class Service(models.Model):
     title = models.CharField(max_length=255)
@@ -29,10 +35,7 @@ class Contact(models.Model):
         return f"{self.f_name}"
     
 
-class Info(models.Model):
-    address = models.CharField(max_length=255)
-    phone = models.CharField(max_length=13)
+class Informations(models.Model):
     email = models.EmailField()
-
-    def __str__(self):
-        return self.phone
+    phone = models.CharField(max_length=25)
+    address = models.TextField()

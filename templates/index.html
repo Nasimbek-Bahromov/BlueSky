@@ -53,7 +53,7 @@
          <div id="main_slider" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                {% for i in baners %}
-                  <li data-target="#main_slider" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+                  <li data-target="#main_slider" data-slide-to="{{ forloop.counter }}" class="{% if forloop.first %}active{% endif %}"></li>
                {% endfor %}
             </ol>
             <div class="carousel-inner">
@@ -106,19 +106,14 @@
                </div>
             </div>
             <div class="row">
+               {% for adver in advertising %}
                <div class="col-md-4">
-                  <img class="margin_top_30 img-responsive" src="{% static 'imgs/blog1.png' %}" alt="#" />
-                  <h3 class="blog_head">Onlayn bron qilish</h3>
+                  <img class="margin_top_30 img-responsive" src="{{adver.image.url}}" alt="#" />
+                  <h3 class="blog_head">{{ adver.title }}</h3>
+                  <h3 class="blog_head">$ {{ adver.price }}</h3>
                </div>
-               <div class="col-md-4">
-                  <img class="margin_top_30 img-responsive" src="{% static 'imgs/blog2.png' %}" alt="#" />
-                  <h3 class="blog_head">Tasdiqlash</h3>
+               {% endfor %}
                </div>
-               <div class="col-md-4">
-                  <img class="margin_top_30 img-responsive" src="{% static 'imgs/blog3.png' %}" alt="#" />
-                  <h3 class="blog_head">Ish holati</h3>
-               </div>
-            </div>
          </div>
       </div>
       <div id="service" class="hiw_section layout_padding">
@@ -151,18 +146,19 @@
                   <h3>Onlayn bron qilish</h3>
                </div>
                <div class="col-md-5">
-               </div>
+               </div> 
             </div>
             <div class="row">
                <div class="col-md-7">
                   <div class="contact-form">
-                     <form>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="text" placeholder="Phone Number" />
-                        <input type="text" placeholder="Type of Service">
-                        <textarea placeholder="Message"></textarea>
-                        <input type="submit" value="SEND">
+                     <form action="#" method="post">
+                        {% csrf_token %}
+                        <input name="f_name" type="text" placeholder="Ism" />
+                        <input name="email" type="email" placeholder="Email" />
+                        <input name="phone" type="text" placeholder="Telefon raqami" />
+                        <input name="service" type="text" placeholder="Xizmat turi">
+                        <textarea name="message" placeholder="Xabar"></textarea>
+                        <button type="submit" class="btn btn-primary">Yuborish</button>
                      </form>
                   </div>
                </div>
@@ -186,28 +182,36 @@
                <div class="col-md-11">
                   <div class="full testimonial_blog">
                      <p>Jackrok</p>
-                     <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscureContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over</p>
+                     <p>Servis (inglizcha: service — „xizmat“) — jismoniy va yuridik shaxslarga, umuman keng aholiga xizmat koʻrsatish; ishlab chiqarish texnika maqsadlaridagi mahsulotlarni, madaniy-maishiy, xoʻjalik va boshqa sanoat mahsulotlarini sotish hamda ularni ishlatish bilan bogʻliq boʻlgan xizmat koʻrsatish sohalari. Servis texnika vositalari, maishiy-roʻzgʻor apparaturasi, kommunal texnikani sozlash va taʼmirlashga nisbatan ham qoʻllanadi.</p>
                   </div>
                </div>
             </div>
          </div>
       </div>
-      <div class="subcribe">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-4 col-sm-6">
-                  <h3>Axborot byulleteni</h3>
-                  <p>dolor sit amet, consectetur adipiscing elit.<br>Ut elit tellus, luctus nec ullamcorper</p>
-               </div>
-               <div class="col-md-8 col-sm-6">
-                  <form>
-                     <input type="email" name="email" placeholder="Enter Your Email Address" />
-                     <button>Subscribe</button>
-                  </form>
-               </div>
-            </div>
+      <div class="container">
+         <div class="row">
+             <div class="col-md-4 col-sm-6">
+                 <h3>Axborot byulleteni</h3>
+                 <p>dolor sit amet, consectetur adipiscing elit.<br>Ut elit tellus, luctus nec ullamcorper</p>
+             </div>
+             <form>
+                 <div class="mb-3">
+                     <label for="exampleInputEmail1" class="form-label">Email manzili</label>
+                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                     <div id="emailHelp" class="form-text">E-pochtangizni hech kim bilan baham ko'rmaymiz.</div>
+                 </div>
+                 <div class="mb-3">
+                     <label for="exampleInputPassword1" class="form-label">Password</label>
+                     <input type="password" class="form-control" id="exampleInputPassword1">
+                 </div>
+                 <div class="mb-3 form-check d-flex align-items-center">
+                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                     <label class="form-check-label" for="exampleCheck1" style="margin-right: 20px;">Meni tekshiring</label>
+                     <button type="submit" class="btn btn-primary">Yuborish</button>
+                 </div>
+             </form>
          </div>
-      </div>
+     </div>
       <footer>
          <div class="container">
             <div class="row">
@@ -233,9 +237,11 @@
                   <div class="item">
                      <h4 class="text-uppercase">Aloqa ma'lumotlari</h4>
                      <p><strong>Korporativ ofis manzili:</strong></p>
-                     <p><img src="{% static 'imgs/phone_icon.png' %}" alt="#" /> 1234 River Street New York, NY 36524</p>
-                     <p><strong>Customer Service:</strong></p>
-                     <p><img src="{% static 'imgs/location.png' %}" alt="#" /> 987 654 3210</p>
+                     <p><img src="{% static 'imgs/phone_icon.png' %}" alt="#" /> {{ info.address }}</p>
+                     <p><strong>Mijozlarga xizmat ko'rsatish:</strong></p>
+                     <p><img src="{% static 'imgs/location.png' %}" alt="#" /> {{ info.phone }}</p>
+                     <p><strong>Email:</strong></p>
+                     <p><img src="{% static 'imgs/email.png' %}" alt="#" width="15px" height="15px" /> {{ info.email }}</p>                     
                   </div>
                </div>
                <div class="col-lg-3 col-md-6 col-12">
